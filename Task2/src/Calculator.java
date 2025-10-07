@@ -8,6 +8,7 @@ public class Calculator {
         double a;
         char operator;
         double b;
+        Double result = null;
 
         while (!ifContinue.equals("n")) {
             System.out.println("Podaj pierwszą liczbę");
@@ -17,12 +18,12 @@ public class Calculator {
             System.out.println("Podaj druga liczbe");
             b = getDouble();
 
-            if (b == 0 && operator == '/') {
+            if (b == 0 && (operator == '/' || operator == '%')) {
                 System.out.println("Nie mozna dzielic przez 0");
                 continue;
             }
 
-            Double result = switch (operator) {
+            result = switch (operator) {
                 case '+' -> a + b;
                 case '-' -> a - b;
                 case '*' -> a * b;
@@ -38,11 +39,11 @@ public class Calculator {
             }
 
             System.out.println(result);
-            checkIfEven(result);
 
             System.out.println("Czy chcesz kontynuować?");
             ifContinue = scanner.nextLine();
         }
+        checkIfEven(result);
     }
 
     private static double getDouble() {
@@ -60,7 +61,11 @@ public class Calculator {
         return power;
     }
 
-    private static void checkIfEven(double result) {
-        System.out.println(result % 2 == 0 ? "Ostatni wynik jest parzysty" : "Ostatni wynik jest nieparzysty");
+    private static void checkIfEven(Double result) {
+        if (result != null) {
+            System.out.println(result % 2 == 0 ? "Ostatni wynik jest parzysty" : "Ostatni wynik jest nieparzysty");
+        } else {
+            System.out.println("Wynik null");
+        }
     }
 }
