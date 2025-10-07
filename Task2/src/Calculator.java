@@ -17,6 +17,11 @@ public class Calculator {
             System.out.println("Podaj druga liczbe");
             b = getDouble();
 
+            if (b == 0 && operator == '/') {
+                System.out.println("Nie mozna dzielic przez 0");
+                continue;
+            }
+
             Double result = switch (operator) {
                 case '+' -> a + b;
                 case '-' -> a - b;
