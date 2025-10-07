@@ -20,6 +20,5 @@ public class EmptyRectangle {
             }
             System.out.println();
         }
-
     }
 }
