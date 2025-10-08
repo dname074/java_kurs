@@ -11,12 +11,11 @@ public class Calculator {
         Double result = null;
 
         while (!ifContinue.equals("n")) {
-            System.out.println("Podaj pierwszą liczbę");
-            a = getDouble();
-            System.out.println("Podaj operator");
-            operator = scanner.nextLine().charAt(0);
-            System.out.println("Podaj druga liczbe");
-            b = getDouble();
+            System.out.println("Podaj dzialanie: ");
+            String[] operation = scanner.nextLine().split(" ");
+            a = Double.parseDouble(operation[0]);
+            operator = operation[1].charAt(0);
+            b = Double.parseDouble(operation[2]);
 
             if (b == 0 && (operator == '/' || operator == '%')) {
                 System.out.println("Nie mozna dzielic przez 0");
@@ -43,13 +42,8 @@ public class Calculator {
             System.out.println("Czy chcesz kontynuować?");
             ifContinue = scanner.nextLine();
         }
-        checkIfEven(result);
-    }
 
-    private static double getDouble() {
-        double number = scanner.nextDouble();
-        scanner.nextLine();
-        return number;
+        checkIfEven(result);
     }
 
     private static double pow(double a, double b) {
