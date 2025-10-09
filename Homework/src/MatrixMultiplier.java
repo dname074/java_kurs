@@ -31,7 +31,7 @@ public class MatrixMultiplier {
                 }
             }
 
-            return Optional.of(new Matrix(multipliedTable[0][0], multipliedTable[0][1], multipliedTable[1][0], multipliedTable[1][1]));
+            return Optional.of(new Matrix(multipliedTable[0][0], multipliedTable[1][0], multipliedTable[0][1], multipliedTable[1][1]));
         }
     }
 
