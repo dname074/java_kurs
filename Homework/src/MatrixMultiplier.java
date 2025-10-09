@@ -13,6 +13,7 @@ public class MatrixMultiplier {
     private static Optional<Matrix> multiply(Matrix matrix1, Matrix matrix2) {
         int[][] table1 = matrix1.getTable();
         int[][] table2 = matrix2.getTable();
+        int[][] multipliedTable = {{0, 0},{0, 0}};
 
         if (!isMultiplicationPossible(table1, table2)) {
             return Optional.empty();
@@ -21,12 +22,16 @@ public class MatrixMultiplier {
             [ x1 y1 ]
             [ x2 y2 ]
              */
-            int x1 = (table1[0][0] * table2[0][0]) + (table1[0][1] * table2[1][0]);
-            int y1 = (table1[0][0] * table2[0][1]) + (table1[0][1] * table2[1][1]);
-            int x2 = (table1[1][0] * table2[0][0]) + (table1[1][1] * table2[1][0]);
-            int y2 = (table1[1][0] * table2[0][1]) + (table1[1][1] * table2[1][1]);
 
-            return Optional.of(new Matrix(x1, x2, y1, y2));
+            for (int i=0; i < table1.length; i++) {
+                for (int j=0; j< table1[i].length; j++) {
+                    for (int k = 0; k < 2; k++) {
+                        multipliedTable[i][j] += table1[i][k] * table2[k][j];
+                    }
+                }
+            }
+
+            return Optional.of(new Matrix(multipliedTable[0][0], multipliedTable[0][1], multipliedTable[1][0], multipliedTable[1][1]));
         }
     }
 
