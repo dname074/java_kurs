@@ -7,8 +7,6 @@ public class Motorcycle extends Vehicle implements Drivable {
     public void drive() {
         if (getTank() < 0.2) {
             System.out.println("Brak paliwa");
-        } else if (getTank() + 0.2 > MAX_FUEL) {
-            System.out.println("Nie ma tyle miejsca w baku");
         } else {
             System.out.println("Jade motorem");
             setTank(getTank() - 0.2);
@@ -23,7 +21,11 @@ public class Motorcycle extends Vehicle implements Drivable {
 
     @Override
     public void refuel(double liters) {
-        super.refuel(liters);
-        System.out.print("motor\n");
+        if (getTank() + 0.2 > MAX_FUEL) {
+            System.out.println("Nie ma tyle miejsca w baku");
+        } else {
+            super.refuel(liters);
+            System.out.print("motor\n");
+        }
     }
 }
