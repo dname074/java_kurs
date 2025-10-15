@@ -25,7 +25,7 @@ public class Car extends Vehicle implements Drivable {
 
     @Override
     public void refuel(double liters) {
-        if (getTank() + 0.2 > MAX_FUEL) {
+        if (getTank() + liters > MAX_FUEL) {
             System.out.println("Nie ma tyle miejsca w baku");
         } else {
             super.refuel(liters);
