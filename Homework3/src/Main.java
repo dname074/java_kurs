@@ -5,7 +5,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    private static List<Point> points = new ArrayList<>();
     public static final Double R = 1.0;
 
     public static void main(String[] args) {
@@ -14,8 +13,8 @@ public class Main {
         System.out.println("Podaj ilosc losowych punktow: ");
         int n = scanner.nextInt();
 
-        generatePoints(n);
-        int numbersInsideCircle = countPointsInCircle();
+        List<Point> points = generatePoints(n);
+        int numbersInsideCircle = countPointsInCircle(points);
 
         BigDecimal ratio = calculateRatio(numbersInsideCircle, n);
 
@@ -23,15 +22,17 @@ public class Main {
         System.out.println("PI wynosi: " + PI);
     }
 
-    private static void generatePoints(int n) {
+    private static List<Point> generatePoints(int n) {
         Random random = new Random();
+        List<Point> points = new ArrayList<>();
 
         for (int i=0; i<n; i++) {
             points.add(new Point(random.nextDouble(-R,R), random.nextDouble(-R,R)));
         }
+        return points;
     }
 
-    private static int countPointsInCircle() {
+    private static int countPointsInCircle(List<Point> points) {
         int i = 0;
 
         for (Point point : points) {
