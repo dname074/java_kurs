@@ -1,20 +1,30 @@
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class UserInteface {
     private final Scanner scanner = new Scanner(System.in);
+    private final Library library;
 
-    protected void menu(Library library) {
-        printOptions();
-        System.out.println("Wybierz opcje: ");
-        Option option = Option.getOptionFromInt(scanner.nextInt());
+    public UserInteface(Library library) {
+        this.library = library;
+    }
 
-        switch(option) {
-            case PRINT_ITEMS -> printAvailableItems(library);
-            case BORROW_ITEM -> borrowItemByTitle(library);
-            case RETURN_ITEM -> returnItemByTitle(library);
-            case PRINT_ITEMS_AMOUNT -> printItemsAmount(library);
-            case EXIT -> exitMessage();
+    protected void menu() {
+        Option option = null;
+
+        while (option!=Option.EXIT) {
+            printOptions();
+            System.out.println("Wybierz opcje: ");
+            option = Option.getOptionFromInt(getIntFromUser());
+
+            switch(option) {
+                case PRINT_ITEMS -> printAvailableItems();
+                case BORROW_ITEM -> borrowItemByTitle();
+                case RETURN_ITEM -> returnItemByTitle();
+                case PRINT_ITEMS_AMOUNT -> printItemsAmount();
+                case EXIT -> exitMessage();
+            }
         }
     }
 
@@ -24,34 +34,68 @@ public class UserInteface {
         }
     }
 
-    private void printAvailableItems(Library library) {
-        List<LibraryItem> libraryItems = library.getAvailableItems();
+    private int getIntFromUser() {
+        while (true) {
+            String input = scanner.nextLine();
 
-        for (LibraryItem libraryItem : libraryItems) {
-            System.out.println("Filmy: ");
-            if (libraryItem instanceof Movie) {
-                System.out.println(libraryItem);
+            if (input.matches("[1-5]")) {
+                return Integer.parseInt(input);
+            } else {
+                System.out.println("Podaj poprawna wartosc");
             }
-            System.out.println("Ksiazki: ");
-            if (libraryItem instanceof Book) {
-                System.out.println(libraryItem);
+        }
+    }
+
+    private void printAvailableItems() {
+        List<LibraryItem> availableItems = library.getItems(true);
+        List<LibraryItem> borrowedItems = library.getItems(false);
+
+        System.out.println("Dostępne: ");
+        printItems(availableItems);
+        System.out.println("Już wypożyczone: ");
+        printItems(borrowedItems);
+    }
+
+    private void printItems(List<LibraryItem> itemsList) {
+        System.out.println("Filmy: ");
+        for (LibraryItem item : itemsList) {
+            if (item instanceof Movie) {
+                System.out.println(item);
+            }
+        }
+
+        System.out.println("Ksiazki: ");
+        for (LibraryItem item : itemsList) {
+            if (item instanceof Book) {
+                System.out.println(item);
             }
         }
     }
 
     private void borrowItemByTitle() {
-
+        String title = getTitleFromUser();
+        Optional<LibraryItem> borrowedItem = library.borrowItem(title);
+        borrowedItem.ifPresentOrElse(item -> System.out.printf("Wypozyczony przedmiot: \n%s\n", item),
+                () -> System.out.println("Brak szukanego przedmiotu w bibliotece"));
     }
 
-    private void returnItemByTitle(Library library) {
+    private void returnItemByTitle() {
+        String title = getTitleFromUser();
+
+        if (library.returnItem(title)) {
+            System.out.println("Zwrocono przedmiot");
+        } else {
+            System.out.println("Nie odnaleziono podanej ksiazki w bazie biblioteki, wiec nie moze ona zostac przez nia przyjeta");
+        }
+    }
+
+    private String getTitleFromUser() {
         System.out.println("Podaj tytul: ");
-        String title = scanner.nextLine();
-
-
+        return scanner.nextLine();
     }
 
     private void printItemsAmount() {
-
+        System.out.printf("W bibliotece znajduje sie %d przedmiotow\n", library.printItemsNumber());
     }
 
     private void exitMessage() {

@@ -41,9 +41,8 @@ public class Book extends LibraryItem {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "author='" + author + '\'' +
-                ", pages=" + pages +
-                '}';
+        return super.toString() +
+                "author: " + author + '\n' +
+                "pages: " + pages + '\n';
     }
 }

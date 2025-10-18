@@ -1,28 +1,56 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Library {
     private List<LibraryItem> libraryItems = new ArrayList<>();
 
-    public List<LibraryItem> getAvailableItems() {
-        return libraryItems;
+    public void addItem(LibraryItem item) {
+        if (item!=null) {
+            libraryItems.add(item);
+        }
     }
 
-    public LibraryItem borrowItem(String title) {
-        for (int i = 0; i < libraryItems.size(); i++) {
-            if (libraryItems.get(i).getTitle().equals(title)) {
-                return libraryItems.get(i);
+    public List<LibraryItem> getItems(boolean availableItems) {
+        List<LibraryItem> items = new ArrayList<>();
+
+        for (LibraryItem item : libraryItems) {
+            if (availableItems) {
+                if (!item.isBorrowed()) {
+                    items.add(item);
+                }
+            } else {
+                if (item.isBorrowed()) {
+                    items.add(item);
+                }
+            }
+        }
+        return items;
+    }
+
+    public Optional<LibraryItem> borrowItem(String title) {
+        for (LibraryItem item : libraryItems) {
+            if (item.getTitle().equals(title) && !item.isBorrowed()) {
+                item.setBorrowed(true);
+                return Optional.of(item);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    public void returnItem(LibraryItem item) {
-        libraryItems.add(item);
+    public boolean returnItem(String title) {
+        for (LibraryItem item : libraryItems) {
+            if (item.getTitle().equals(title)) {
+                item.setBorrowed(false);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Integer printItemsNumber() {
-        return libraryItems.size();
+        return LibraryItem.getAmount();
     }
 }
