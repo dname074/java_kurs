@@ -19,7 +19,7 @@ public class UserInteface {
             option = Option.getOptionFromInt(getIntFromUser());
 
             switch(option) {
-                case PRINT_ITEMS -> printAvailableItems();
+                case PRINT_ITEMS -> printItemsFromLibrary();
                 case BORROW_ITEM -> borrowItemByTitle();
                 case RETURN_ITEM -> returnItemByTitle();
                 case PRINT_ITEMS_AMOUNT -> printItemsAmount();
@@ -46,7 +46,7 @@ public class UserInteface {
         }
     }
 
-    private void printAvailableItems() {
+    private void printItemsFromLibrary() {
         List<LibraryItem> availableItems = library.getItems(true);
         List<LibraryItem> borrowedItems = library.getItems(false);
 
@@ -57,13 +57,20 @@ public class UserInteface {
     }
 
     private void printItems(List<LibraryItem> itemsList) {
+        printMovies(itemsList);
+        printBooks(itemsList);
+    }
+
+    private void printMovies(List<LibraryItem> itemsList) {
         System.out.println("Filmy: ");
         for (LibraryItem item : itemsList) {
             if (item instanceof Movie) {
                 System.out.println(item);
             }
         }
+    }
 
+    private void printBooks(List<LibraryItem> itemsList) {
         System.out.println("Ksiazki: ");
         for (LibraryItem item : itemsList) {
             if (item instanceof Book) {
