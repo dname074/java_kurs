@@ -1,5 +1,8 @@
+import exception.ItemAlreadyAvailableException;
+import exception.ItemIsNotAvailableException;
+import exception.ItemNotFoundException;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class UserInteface {
@@ -81,18 +84,21 @@ public class UserInteface {
 
     private void borrowItemByTitle() {
         String title = getTitleFromUser();
-        Optional<LibraryItem> borrowedItem = library.borrowItem(title);
-        borrowedItem.ifPresentOrElse(item -> System.out.printf("Wypozyczony przedmiot: \n%s\n", item),
-                () -> System.err.println("Brak szukanego przedmiotu w bibliotece"));
+        try {
+            LibraryItem borrowedItem = library.borrowItem(title);
+            System.out.printf("Wypozyczony przedmiot: \n%s\n", borrowedItem);
+        } catch (ItemNotFoundException | ItemIsNotAvailableException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private void returnItemByTitle() {
         String title = getTitleFromUser();
-
-        if (library.returnItem(title)) {
+        try {
+            library.returnItem(title);
             System.out.println("Zwrocono przedmiot");
-        } else {
-            System.err.println("Nie odnaleziono podanej ksiazki w bazie biblioteki, wiec nie moze ona zostac przez nia przyjeta");
+        } catch (ItemNotFoundException | ItemAlreadyAvailableException e) {
+            System.err.println(e.getMessage());
         }
     }
 

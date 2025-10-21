@@ -1,3 +1,7 @@
+import exception.ItemAlreadyAvailableException;
+import exception.ItemIsNotAvailableException;
+import exception.ItemNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,23 +32,23 @@ public class Library {
         return items;
     }
 
-    public Optional<LibraryItem> borrowItem(String title) {
-        return findItemByTitle(title)
-                .filter(item -> !item.isBorrowed())
-                .map(item -> {
-                    item.setBorrowed(true);
-                    return item;
-                });
+    public LibraryItem borrowItem(String title) {
+        LibraryItem item = findItemByTitle(title).orElseThrow(() -> new ItemNotFoundException("Nie znaleziono szukanego przedmiotu w bibliotece"));
+
+        if (!item.isBorrowed()) {
+            item.setBorrowed(true);
+            return item;
+        }
+        throw new ItemIsNotAvailableException("Szukany przedmiot nie jest w tej chwili dostepny");
     }
 
-    public boolean returnItem(String title) {
-        return findItemByTitle(title)
-                .filter(LibraryItem::isBorrowed)
-                .map(item -> {
-                    item.setBorrowed(false);
-                    return true;
-                })
-                .orElse(false);
+    public void returnItem(String title) throws ItemAlreadyAvailableException {
+        LibraryItem item = findItemByTitle(title).orElseThrow(() -> new ItemNotFoundException("Podany przedmiot nie nalezy do tej biblioteki"));
+
+        if (!item.isBorrowed()) {
+            throw new ItemAlreadyAvailableException("Ten przedmiot jest juz dostepny w bibliotece");
+        }
+        item.setBorrowed(false);
     }
 
     private Optional<LibraryItem> findItemByTitle(String title) {
