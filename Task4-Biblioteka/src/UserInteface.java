@@ -41,7 +41,7 @@ public class UserInteface {
             if (input.matches("[1-5]")) {
                 return Integer.parseInt(input);
             } else {
-                System.out.println("Podaj poprawna wartosc");
+                System.err.println("Podaj poprawna wartosc");
             }
         }
     }
@@ -83,7 +83,7 @@ public class UserInteface {
         String title = getTitleFromUser();
         Optional<LibraryItem> borrowedItem = library.borrowItem(title);
         borrowedItem.ifPresentOrElse(item -> System.out.printf("Wypozyczony przedmiot: \n%s\n", item),
-                () -> System.out.println("Brak szukanego przedmiotu w bibliotece"));
+                () -> System.err.println("Brak szukanego przedmiotu w bibliotece"));
     }
 
     private void returnItemByTitle() {
@@ -92,7 +92,7 @@ public class UserInteface {
         if (library.returnItem(title)) {
             System.out.println("Zwrocono przedmiot");
         } else {
-            System.out.println("Nie odnaleziono podanej ksiazki w bazie biblioteki, wiec nie moze ona zostac przez nia przyjeta");
+            System.err.println("Nie odnaleziono podanej ksiazki w bazie biblioteki, wiec nie moze ona zostac przez nia przyjeta");
         }
     }
 

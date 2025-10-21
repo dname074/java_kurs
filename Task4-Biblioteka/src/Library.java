@@ -29,25 +29,31 @@ public class Library {
     }
 
     public Optional<LibraryItem> borrowItem(String title) {
-        for (LibraryItem item : libraryItems) {
-            if (item.getTitle().equals(title) && !item.isBorrowed()) {
-                item.setBorrowed(true);
-                return Optional.of(item);
-            }
-        }
-
-        return Optional.empty();
+        return findItemByTitle(title)
+                .filter(item -> !item.isBorrowed())
+                .map(item -> {
+                    item.setBorrowed(true);
+                    return item;
+                });
     }
 
     public boolean returnItem(String title) {
+        return findItemByTitle(title)
+                .filter(LibraryItem::isBorrowed)
+                .map(item -> {
+                    item.setBorrowed(false);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    private Optional<LibraryItem> findItemByTitle(String title) {
         for (LibraryItem item : libraryItems) {
             if (item.getTitle().equals(title)) {
-                item.setBorrowed(false);
-                return true;
+                return Optional.of(item);
             }
         }
-
-        return false;
+        return Optional.empty();
     }
 
     public Integer printItemsNumber() {
