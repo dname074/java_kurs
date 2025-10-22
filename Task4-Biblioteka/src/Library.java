@@ -33,7 +33,8 @@ public class Library {
     }
 
     public LibraryItem borrowItem(String title) {
-        LibraryItem item = findItemByTitle(title).orElseThrow(() -> new ItemNotFoundException("Nie znaleziono szukanego przedmiotu w bibliotece"));
+        LibraryItem item = findItemByTitle(title)
+                .orElseThrow(() -> new ItemNotFoundException("Nie znaleziono szukanego przedmiotu w bibliotece"));
 
         if (!item.isBorrowed()) {
             item.setBorrowed(true);
@@ -43,7 +44,8 @@ public class Library {
     }
 
     public void returnItem(String title) throws ItemAlreadyAvailableException {
-        LibraryItem item = findItemByTitle(title).orElseThrow(() -> new ItemNotFoundException("Podany przedmiot nie nalezy do tej biblioteki"));
+        LibraryItem item = findItemByTitle(title)
+                .orElseThrow(() -> new ItemNotFoundException("Podany przedmiot nie nalezy do tej biblioteki"));
 
         if (!item.isBorrowed()) {
             throw new ItemAlreadyAvailableException("Ten przedmiot jest juz dostepny w bibliotece");

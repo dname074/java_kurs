@@ -21,12 +21,16 @@ public class UserInteface {
             System.out.println("Wybierz opcje: ");
             option = Option.getOptionFromInt(getIntFromUser());
 
-            switch(option) {
-                case PRINT_ITEMS -> printItemsFromLibrary();
-                case BORROW_ITEM -> borrowItemByTitle();
-                case RETURN_ITEM -> returnItemByTitle();
-                case PRINT_ITEMS_AMOUNT -> printItemsAmount();
-                case EXIT -> exitMessage();
+            try {
+                switch(option) {
+                    case PRINT_ITEMS -> printItemsFromLibrary();
+                    case BORROW_ITEM -> borrowItemByTitle();
+                    case RETURN_ITEM -> returnItemByTitle();
+                    case PRINT_ITEMS_AMOUNT -> printItemsAmount();
+                    case EXIT -> exitMessage();
+                }
+            } catch (ItemNotFoundException | ItemIsNotAvailableException | ItemAlreadyAvailableException e) {
+                System.err.println(e.getMessage());
             }
         }
     }
@@ -84,22 +88,14 @@ public class UserInteface {
 
     private void borrowItemByTitle() {
         String title = getTitleFromUser();
-        try {
-            LibraryItem borrowedItem = library.borrowItem(title);
-            System.out.printf("Wypozyczony przedmiot: \n%s\n", borrowedItem);
-        } catch (ItemNotFoundException | ItemIsNotAvailableException e) {
-            System.err.println(e.getMessage());
-        }
+        LibraryItem borrowedItem = library.borrowItem(title);
+        System.out.printf("Wypozyczony przedmiot: \n%s\n", borrowedItem);
     }
 
-    private void returnItemByTitle() {
+    private void returnItemByTitle() throws ItemAlreadyAvailableException {
         String title = getTitleFromUser();
-        try {
-            library.returnItem(title);
-            System.out.println("Zwrocono przedmiot");
-        } catch (ItemNotFoundException | ItemAlreadyAvailableException e) {
-            System.err.println(e.getMessage());
-        }
+        library.returnItem(title);
+        System.out.println("Zwrocono przedmiot");
     }
 
     private String getTitleFromUser() {
