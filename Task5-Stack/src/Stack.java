@@ -1,97 +1,94 @@
-public class Stack {
-    private Node head;
+public class Stack<T> {
+    private Node<T> head;
 
     protected void printAll() {
         if (isStackEmpty()) {
             emptyStackMessage();
-        } else {
-            System.out.print("[" + head.getValue());
-            Node temp = head;
-            while (temp.getNext() != null) {
-                temp = temp.getNext();
-                System.out.print("," + temp.getValue());
-            }
-            System.out.println("]");
+            return;
         }
+        System.out.print("[" + head.getValue());
+        Node<T> temp = head;
+        while (temp.getNext() != null) {
+            temp = temp.getNext();
+            System.out.print("," + temp.getValue());
+        }
+        System.out.println("]");
     }
 
-    protected void push(int newValue) {
-        head = new Node(newValue, head);
+    protected void push(T newValue) {
+        head = new Node<>(newValue, head);
     }
 
-    protected int pop() {
+    protected T pop() {
         if (isStackEmpty()) {
             emptyStackMessage();
         }
-        int removedValue = head.getValue();
+        T removedValue = head.getValue();
         head = head.getNext();
         return removedValue;
     }
 
     // FIFO implementation
-    protected void pushLast(int newValue) {
+    protected void pushLast(T newValue) {
         if (isStackEmpty()) {
             push(newValue);
-        } else {
-            Node temp = head;
-            while (temp.getNext()!=null) {
-                temp = temp.getNext();
-            }
-            temp.setNext(new Node(newValue, null));
+            return;
         }
+        Node<T> temp = head;
+        while (temp.getNext()!=null) {
+            temp = temp.getNext();
+        }
+        temp.setNext(new Node<>(newValue, null));
     }
 
-    protected Integer popLast() {
+    protected void popLast() {
         if (isStackEmpty()) {
             emptyStackMessage();
-        } else {
-            Node temp = head;
-            int removedValue;
-            while(temp.getNext()!=null) {
-                if (temp.getNext().getNext() == null) {
-                    removedValue = temp.getNext().getValue();
-                    temp.setNext(null);
-                    return removedValue;
-                } else {
-                    temp = temp.getNext();
-                }
+            return;
+        }
+        Node<T> temp = head;
+
+        while(temp.getNext()!=null) {
+            if (temp.getNext().getNext() == null) {
+                temp.setNext(null);
+            } else {
+                temp = temp.getNext();
             }
         }
-
-        return null;
     }
 
     protected void removeByIndex(int index) {
         if (isStackEmpty()) {
             emptyStackMessage();
-        } else {
-            Node temp = head;
-            for (int i=0; i<index-1; i++) {
-                if (head.getNext()!=null) {
-                    temp = temp.getNext();
-                }
-            }
-            temp.setNext(temp.getNext().getNext());
+            return;
         }
+        Node<T> temp = head;
+        for (int i=0; i<index-1; i++) {
+            if (head.getNext()!=null) {
+                temp = temp.getNext();
+            }
+        }
+        temp.setNext(temp.getNext().getNext());
     }
 
-    protected void remove(int value) {
+    protected void remove(T value) {
         if (isStackEmpty()) {
             emptyStackMessage();
-        } else {
-            Node temp = head;
+            return;
+        }
+        Node<T> temp = head;
 
-            if (temp.getValue() == value) {
-                head = temp.getNext();
-            } else {
-                while (temp.getNext()!=null) {
-                    if (temp.getNext().getValue() == value) {
-                        temp.setNext(temp.getNext().getNext());
-                        break;
-                    }
-                    temp = temp.getNext();
-                }
+        if (temp.getValue().equals(value)) {
+            head = temp.getNext();
+            return;
+        }
+
+        while (temp.getNext()!=null) {
+            if (temp.getNext().getValue().equals(value)) {
+                temp.setNext(temp.getNext().getNext());
+                break;
             }
+            temp = temp.getNext();
         }
     }
 

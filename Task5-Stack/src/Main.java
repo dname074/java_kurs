@@ -1,25 +1,27 @@
 public class Main {
     public static void main(String[] args) {
-        Stack stack = new Stack();
-        System.out.println("LIFO testy");
-        stack.push(5);
-        stack.push(3);
-        stack.push(8);
-        stack.push(2);
-        System.out.println(stack.pop());
-        stack.printAll();
+        Stack<String> stringStack = new Stack<>();
+        System.out.println("Stack stringow");
+        stringStack.push("A");
+        stringStack.push("C");
+        stringStack.printAll();
+        System.out.println(stringStack.pop());
+        stringStack.printAll();
+        stringStack.push("H");
+        stringStack.pushLast("Wartosc");
+        stringStack.printAll();
+        stringStack.popLast();
+        stringStack.push("Z");
+        stringStack.printAll();
+        stringStack.remove("H");
+        stringStack.printAll();
 
-        System.out.println("FIFO testy");
-        stack.pushLast(10);
-        stack.pushLast(3);
-        stack.printAll();
-        System.out.println(stack.popLast());
-        stack.printAll();
-        stack.removeByIndex(2); // 5 pop
-        stack.printAll();
-        stack.pushLast(15);
-        stack.printAll();
-        stack.remove(10);
-        stack.printAll();
+        Stack<Point> pointStack = new Stack<>();
+        Point point = new Point(6,2);
+        pointStack.push(new Point(5, 3));
+        pointStack.push(point);
+        pointStack.printAll();
+        pointStack.remove(point);
+        pointStack.printAll();
     }
 }
