@@ -92,6 +92,10 @@ public class Stack<T> {
         }
     }
 
+    protected void removeAll() {
+        head = null;
+    }
+
     private void emptyStackMessage() {
         System.out.println("Stos jest pusty");
     }

@@ -15,6 +15,8 @@ public class Main {
         stringStack.printAll();
         stringStack.remove("H");
         stringStack.printAll();
+        stringStack.removeAll();
+        stringStack.printAll();
 
         Stack<Point> pointStack = new Stack<>();
         Point point = new Point(6,2);
