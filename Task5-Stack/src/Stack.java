@@ -83,7 +83,7 @@ public class Stack<T> {
             return;
         }
 
-        while (temp.getNext()!=null) {
+        while (temp != null && temp.getNext()!=null) {
             if (temp.getNext().getValue().equals(value)) {
                 temp.setNext(temp.getNext().getNext());
                 break;
@@ -92,8 +92,27 @@ public class Stack<T> {
         }
     }
 
-    protected void removeAll() {
+    protected void clear() {
         head = null;
+    }
+
+    protected void removeAll(T value) {
+        if (head == null) {
+            emptyStackMessage();
+            return;
+        }
+        Node<T> temp = head;
+
+        if (temp.getValue().equals(value)) {
+            head = temp.getNext();
+        }
+
+        while (temp != null && temp.getNext() != null) {
+            if (temp.getNext().getValue().equals(value)) {
+                temp.setNext(temp.getNext().getNext());
+            }
+            temp = temp.getNext();
+        }
     }
 
     private void emptyStackMessage() {
