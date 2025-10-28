@@ -103,15 +103,16 @@ public class Stack<T> {
         }
         Node<T> temp = head;
 
-        if (temp.getValue().equals(value)) {
-            head = temp.getNext();
-        }
-
-        while (temp != null && temp.getNext() != null) {
+        while (temp.getNext() != null) {
             if (temp.getNext().getValue().equals(value)) {
                 temp.setNext(temp.getNext().getNext());
+                continue;
             }
             temp = temp.getNext();
+        }
+
+        if (head.getValue().equals(value)) {
+            head = head.getNext();
         }
     }
 

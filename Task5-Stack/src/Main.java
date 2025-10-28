@@ -2,23 +2,10 @@ public class Main {
     public static void main(String[] args) {
         Stack<String> stringStack = new Stack<>();
         System.out.println("Stack stringow");
-        stringStack.push("Z");
         stringStack.push("A");
-        stringStack.push("C");
+        stringStack.push("A");
         stringStack.printAll();
-        System.out.println(stringStack.pop());
-        stringStack.printAll();
-        stringStack.push("H");
-        stringStack.pushLast("Wartosc");
-        stringStack.printAll();
-        stringStack.popLast();
-        stringStack.push("Z");
-        stringStack.printAll();
-        stringStack.remove("H");
-        stringStack.printAll();
-        stringStack.removeAll("Z");
-        stringStack.printAll();
-        stringStack.clear();
+        stringStack.removeAll("A");
         stringStack.printAll();
 
         Stack<Point> pointStack = new Stack<>();
