@@ -9,6 +9,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -195,7 +196,7 @@ public class Exercises {
         return getAccountStream()
                 .collect(Collectors.toMap(
                         Account::getNumber,
-                        account -> account
+                        Function.identity()
                 ));
     }
 
