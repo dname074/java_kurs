@@ -20,9 +20,7 @@ public class Smartfon extends Komorka {
 
     @Override
     public void wyswietlHistoriePolaczen() {
-        String[] polaczenia = getOstatniePolaczenia();
-        Arrays.stream(polaczenia)
-                .limit(10)
+        Arrays.stream(ostatniePolaczenia)
                 .forEach(number -> getPersonByNumber(number)
                         .ifPresentOrElse(
                                 System.out::println,

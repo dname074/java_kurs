@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Komorka extends Telefon {
-    private final String[] ostatniePolaczenia;
+    protected final String[] ostatniePolaczenia;
     private int callCounter = 0;
     public static final int MAX_CALLS = 10;
 
@@ -13,15 +13,14 @@ public class Komorka extends Telefon {
         this.ostatniePolaczenia = new String[MAX_CALLS];
     }
 
+    //todo: poprawic tą metodę, żeby przesuwała tablicę
     @Override
     public void zadzwon(String numer) {
-        super.zadzwon(numer);
-        ostatniePolaczenia[callCounter] = numer;
-        callCounter++;
-    }
-
-    public String[] getOstatniePolaczenia() {
-        return ostatniePolaczenia;
+        if (callCounter < MAX_CALLS) {
+            super.zadzwon(numer);
+            ostatniePolaczenia[callCounter] = numer;
+            callCounter++;
+        }
     }
 
     @Override
