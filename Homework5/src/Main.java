@@ -77,7 +77,7 @@ public class Main {
     }
 
     private static Map<String, Set<String>> getRegionsByCategory(List<Order> orders, List<Product> products) {
-        Map<String, String> productsCategories = getProductsWithCategories(products);
+        Map<String, String> productsCategories = getProductsNamesWithCategories(products);
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         order -> productsCategories.get(order.getProductName()),
@@ -85,7 +85,7 @@ public class Main {
                 ));
     }
 
-    private static Map<String,String> getProductsWithCategories(List<Product> products) {
+    private static Map<String,String> getProductsNamesWithCategories(List<Product> products) {
         return products.stream()
                 .collect(Collectors.toMap(
                         Product::getName,
@@ -109,7 +109,7 @@ public class Main {
     }
 
     private static Map<String, Boolean> getRegionsWithElectronicsCategoryBought(List<Order> orders, List<Product> products) {
-        Map<String, String> productsWithCategory = getProductsWithCategories(products);
+        Map<String, String> productsWithCategory = getProductsNamesWithCategories(products);
 
         return orders.stream()
                 .collect(Collectors.groupingBy(
