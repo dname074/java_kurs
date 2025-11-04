@@ -16,16 +16,16 @@ public class Komorka extends Telefon {
     //todo: poprawic tą metodę, żeby przesuwała tablicę
     @Override
     public void zadzwon(String numer) {
+        super.zadzwon(numer);
         if (callCounter < MAX_CALLS) {
-            super.zadzwon(numer);
             ostatniePolaczenia[callCounter] = numer;
             callCounter++;
-        } else {
-            for (int i=1; i<ostatniePolaczenia.length; i++) {
-                ostatniePolaczenia[i-1] = ostatniePolaczenia[i];
-            }
-            ostatniePolaczenia[MAX_CALLS-1] = numer;
+            return;
         }
+        for (int i=1; i<ostatniePolaczenia.length; i++) {
+            ostatniePolaczenia[i-1] = ostatniePolaczenia[i];
+        }
+        ostatniePolaczenia[MAX_CALLS-1] = numer;
     }
 
     @Override
