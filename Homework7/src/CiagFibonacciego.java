@@ -10,26 +10,26 @@ public class CiagFibonacciego {
     }
 
     public static void main(String[] args) {
-        System.out.println(count(60));
+        System.out.println(calculateFibonacci(60));
     }
 
-    private static long count(int n) {
-        return countFibonacciSequenceImproved(n);
+    private static long calculateFibonacci(int n) {
+        return calculateFibonacciSequenceImproved(n);
     }
 
-    private static long countFibonacciSequence(int n) {
+    private static long calculateFibonacciSequence(int n) {
         if (n == 0) {
             return 0;
         } else if (n==1) {
             return 1;
         } else {
-            return countFibonacciSequence(n-1) + countFibonacciSequence(n-2);
+            return calculateFibonacciSequence(n-1) + calculateFibonacciSequence(n-2);
         }
     }
 
-    private static long countFibonacciSequenceImproved(int n) {
+    private static long calculateFibonacciSequenceImproved(int n) {
         if (sequence.size() <= n) {
-            sequence.add(countFibonacciSequenceImproved(n-1) + countFibonacciSequenceImproved(n-2));
+            sequence.add(calculateFibonacciSequenceImproved(n-1) + calculateFibonacciSequenceImproved(n-2));
         }
         return sequence.get(n);
     }
