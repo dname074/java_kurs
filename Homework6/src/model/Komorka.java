@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 
 public class Komorka extends Telefon {
@@ -13,7 +13,6 @@ public class Komorka extends Telefon {
         this.ostatniePolaczenia = new String[MAX_CALLS];
     }
 
-    //todo: poprawic tą metodę, żeby przesuwała tablicę
     @Override
     public void zadzwon(String numer) {
         super.zadzwon(numer);
@@ -22,10 +21,10 @@ public class Komorka extends Telefon {
             callCounter++;
             return;
         }
-        for (int i=1; i<ostatniePolaczenia.length; i++) {
-            ostatniePolaczenia[i-1] = ostatniePolaczenia[i];
+        for (int i = 1; i < ostatniePolaczenia.length; i++) {
+            ostatniePolaczenia[i - 1] = ostatniePolaczenia[i];
         }
-        ostatniePolaczenia[MAX_CALLS-1] = numer;
+        ostatniePolaczenia[MAX_CALLS - 1] = numer;
     }
 
     @Override
