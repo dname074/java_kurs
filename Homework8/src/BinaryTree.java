@@ -64,13 +64,11 @@ public class BinaryTree {
         printTree(root);
     }
 
-    private void printTree(Node root) {
-        if (root.hasLeftChild()) {
-            printTree(root.getLeftChild());
-        }
-        System.out.println(root.getKey());
-        if (root.hasRightChild()) {
-            printTree(root.getRightChild());
+    private void printTree(Node node) {
+        if (node!=null) {
+            printTree(node.getLeftChild());
+            System.out.println(node.getKey());
+            printTree(node.getRightChild());
         }
     }
 }
