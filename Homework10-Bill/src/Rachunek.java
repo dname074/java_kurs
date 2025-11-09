@@ -1,35 +1,38 @@
+import java.math.BigDecimal;
+
 public class Rachunek {
     protected Osoba wlasciciel;
-    protected double balance;
+    protected BigDecimal balance;
 
-    public Rachunek(Osoba wlasciciel, double balance) {
+    public Rachunek(Osoba wlasciciel, BigDecimal balance) {
         this.wlasciciel = wlasciciel;
         this.balance = balance;
     }
 
-    public boolean payment(Double price) {
+    public boolean payment(BigDecimal price) {
         if (price == null) {
             return false;
         }
-        balance += price;
+        balance = balance.add(price);
         return true;
     }
 
-    public boolean paycheck(Double price) {
-        if (price == null || balance < price) {
+    public boolean paycheck(BigDecimal price) {
+        if (price == null || !isBalanceEnough(price)) {
             return false;
         }
 
-        balance -= price;
+        balance = balance.subtract(price);
         return true;
     }
 
-    public boolean transfer(Double price, Rachunek rachunek) {
-        if (rachunek == null || price == null) {
+    public boolean transfer(BigDecimal price, Rachunek rachunek) {
+        if (rachunek == null || price == null || !isBalanceEnough(price)) {
             return false;
         }
 
-        rachunek.setBalance(rachunek.getBalance() + price);
+        rachunek.setBalance(rachunek.getBalance().add(price));
+        balance = balance.subtract(price);
         return true;
     }
 
@@ -37,16 +40,20 @@ public class Rachunek {
         System.out.println("Rachunek podstawowy");
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    private boolean isBalanceEnough(BigDecimal price) {
+        return balance.compareTo(price) >= 0;
     }
 
     @Override
     public String toString() {
-        return String.format("Account owner: %s \nAccount balance %f", wlasciciel.toString(), balance);
+        return String.format("Account owner: %s \nAccount balance %.2f", wlasciciel.toString(), balance);
     }
 }
