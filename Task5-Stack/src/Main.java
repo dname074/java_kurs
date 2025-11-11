@@ -1,19 +1,19 @@
 public class Main {
     public static void main(String[] args) {
-        Stack<String> stringStack = new Stack<>();
+        MyStack<String> stringMyStack = new MyStack<>();
         System.out.println("Stack stringow");
-        stringStack.push("A");
-        stringStack.push("A");
-        stringStack.printAll();
-        stringStack.removeAll("A");
-        stringStack.printAll();
+        stringMyStack.push("A");
+        stringMyStack.push("A");
+        stringMyStack.printAll();
+        stringMyStack.removeAll("A");
+        stringMyStack.printAll();
 
-        Stack<Point> pointStack = new Stack<>();
+        MyStack<Point> pointMyStack = new MyStack<>();
         Point point = new Point(6,2);
-        pointStack.push(new Point(5, 3));
-        pointStack.push(point);
-        pointStack.printAll();
-        pointStack.remove(point);
-        pointStack.printAll();
+        pointMyStack.push(new Point(5, 3));
+        pointMyStack.push(point);
+        pointMyStack.printAll();
+        pointMyStack.remove(point);
+        pointMyStack.printAll();
     }
 }

@@ -1,5 +1,5 @@
-public class Stack<T> {
-    private Node<T> head;
+public class MyStack<T> {
+    private StackNode<T> head;
 
     protected void printAll() {
         if (isStackEmpty()) {
@@ -7,7 +7,7 @@ public class Stack<T> {
             return;
         }
         System.out.print("[" + head.getValue());
-        Node<T> temp = head;
+        StackNode<T> temp = head;
         while (temp.getNext() != null) {
             temp = temp.getNext();
             System.out.print("," + temp.getValue());
@@ -16,7 +16,7 @@ public class Stack<T> {
     }
 
     protected void push(T newValue) {
-        head = new Node<>(newValue, head);
+        head = new StackNode<>(newValue, head);
     }
 
     protected T pop() {
@@ -34,11 +34,11 @@ public class Stack<T> {
             push(newValue);
             return;
         }
-        Node<T> temp = head;
+        StackNode<T> temp = head;
         while (temp.getNext()!=null) {
             temp = temp.getNext();
         }
-        temp.setNext(new Node<>(newValue, null));
+        temp.setNext(new StackNode<>(newValue, null));
     }
 
     protected void popLast() {
@@ -46,7 +46,7 @@ public class Stack<T> {
             emptyStackMessage();
             return;
         }
-        Node<T> temp = head;
+        StackNode<T> temp = head;
 
         while(temp.getNext()!=null) {
             if (temp.getNext().getNext() == null) {
@@ -62,7 +62,7 @@ public class Stack<T> {
             emptyStackMessage();
             return;
         }
-        Node<T> temp = head;
+        StackNode<T> temp = head;
         for (int i=0; i<index-1; i++) {
             if (head.getNext()!=null) {
                 temp = temp.getNext();
@@ -76,7 +76,7 @@ public class Stack<T> {
             emptyStackMessage();
             return;
         }
-        Node<T> temp = head;
+        StackNode<T> temp = head;
 
         while (temp.getNext()!=null) {
             if (temp.getNext().getValue().equals(value)) {
@@ -100,7 +100,7 @@ public class Stack<T> {
             emptyStackMessage();
             return;
         }
-        Node<T> temp = head;
+        StackNode<T> temp = head;
 
         while (temp.getNext() != null) {
             if (temp.getNext().getValue().equals(value)) {
@@ -119,7 +119,7 @@ public class Stack<T> {
         System.out.println("Stos jest pusty");
     }
 
-    private boolean isStackEmpty() {
+    public boolean isStackEmpty() {
         return head == null;
     }
 }

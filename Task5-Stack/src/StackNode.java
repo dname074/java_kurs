@@ -1,19 +1,19 @@
 import java.util.Objects;
 
-public class Node<T> {
-    private Node<T> next;
+public class StackNode<T> {
+    private StackNode<T> next;
     private T value;
 
-    public Node(T value, Node<T> next) {
+    public StackNode(T value, StackNode<T> next) {
         this.value = value;
         this.next = next;
     }
 
-    public Node<T> getNext() {
+    public StackNode<T> getNext() {
         return next;
     }
 
-    public void setNext(Node<T> next) {
+    public void setNext(StackNode<T> next) {
         this.next = next;
     }
 
@@ -24,7 +24,7 @@ public class Node<T> {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Node<?> node = (Node<?>) o;
+        StackNode<?> node = (StackNode<?>) o;
         return Objects.equals(next, node.next) && Objects.equals(value, node.value);
     }
 

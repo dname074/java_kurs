@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 public class BinaryTree {
     private Node root;
 
@@ -42,26 +40,44 @@ public class BinaryTree {
             return;
         }
         Node temp = root;
-        while (true) {
-            if (root.getKey() == key) {
+        Node parent = null;
+        while (temp != null) {
+            parent = temp;
+            if (temp.getKey() == key) {
                 break;
             }
             if (temp.getKey() > key) {
-                if (temp.hasLeftChild()) {
-                    temp = temp.getLeftChild();
-                } else {
-                    temp.setLeftChild(new Node(key));
-                    break;
-                }
+                temp = temp.getLeftChild();
             } else {
-                if (temp.hasRightChild()) {
-                    temp = temp.getRightChild();
-                } else {
-                    temp.setRightChild(new Node(key));
-                    break;
-                }
+                temp = temp.getRightChild();
             }
         }
+        if (key < parent.getKey()) {
+            parent.setLeftChild(new Node(key));
+        } else {
+            parent.setRightChild(new Node(key));
+        }
+//        Node temp = root;
+//        while (true) {
+//            if (root.getKey() == key) {
+//                break;
+//            }
+//            if (temp.getKey() > key) {
+//                if (temp.hasLeftChild()) {
+//                    temp = temp.getLeftChild();
+//                } else {
+//                    temp.setLeftChild(new Node(key));
+//                    break;
+//                }
+//            } else {
+//                if (temp.hasRightChild()) {
+//                    temp = temp.getRightChild();
+//                } else {
+//                    temp.setRightChild(new Node(key));
+//                    break;
+//                }
+//            }
+//        }
     }
 
     public boolean contains(int key) {
@@ -91,27 +107,35 @@ public class BinaryTree {
     }
 
     public boolean containsKeyByIteration(int key) {
-        if (root == null) {
-            return false;
-        }
-
         Node temp = root;
-        while (temp.getKey() != key) {
+        while (temp != null) {
+            if (temp.getKey() == key) {
+                return true;
+            }
             if (temp.getKey() > key) {
-                if (temp.hasLeftChild()) {
-                    temp = temp.getLeftChild();
-                } else {
-                    return false;
-                }
+                temp = temp.getLeftChild();
             } else {
-                if (temp.hasRightChild()) {
-                    temp = temp.getRightChild();
-                } else {
-                    return false;
-                }
+                temp = temp.getRightChild();
             }
         }
-        return true;
+        return false;
+//        Node temp = root;
+//        while (temp.getKey() != key) {
+//            if (temp.getKey() > key) {
+//                if (temp.hasLeftChild()) {
+//                    temp = temp.getLeftChild();
+//                } else {
+//                    return false;
+//                }
+//            } else {
+//                if (temp.hasRightChild()) {
+//                    temp = temp.getRightChild();
+//                } else {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
     }
 
     public void print() {
@@ -127,11 +151,12 @@ public class BinaryTree {
     }
 
     public void inOrderIterate() {
-        Stack<Node> treeStack = new Stack<>();
+        MyStack<Node> treeStack = new MyStack<>();
         Node temp = root;
-        while (temp != null || !treeStack.empty()) {
+        while (temp != null || !treeStack.isStackEmpty()) {
             while (temp != null) {
                 treeStack.push(temp);
+                // problemem byla klasa Node, która w obu modulach byla nazwana tak samo, rozwiazanie: zmiana nazwy klasy Node dla Stacka
                 temp = temp.getLeftChild();
             }
             temp = treeStack.pop();
