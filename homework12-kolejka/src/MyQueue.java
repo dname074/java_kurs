@@ -1,49 +1,39 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Queue;
 import java.util.Random;
-
-import static java.lang.Thread.sleep;
 
 public class MyQueue {
     public static final int MAX_VALUES = 5;
-    private List<Integer> queue = new LinkedList<>();
-    private final Random random = new Random();
+    private final Queue<Integer> queue = new LinkedList<>();
+    public static final Random random = new Random();
 
-    public synchronized void produce() {
-        while (queue.size() >= MAX_VALUES) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+    public void produce() throws InterruptedException {
+        synchronized (queue) {
+            while (queue.size() >= MAX_VALUES) {
+                try {
+                    queue.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            int value = random.nextInt(1,100);
+            System.out.println("Producing value in queue: " + value);
+            queue.add(value);
+            queue.notifyAll();
         }
-        int value = random.nextInt(1,100);
-        System.out.println("Producing value in queue: " + value);
-        try {
-            sleep(random.nextInt(100,2500));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        queue.add(value);
-        notifyAll();
     }
 
-    public synchronized void consume() {
-        while (queue.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+    public void consume()  throws InterruptedException {
+        synchronized (queue) {
+            while (queue.isEmpty()) {
+                try {
+                    queue.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            System.out.println("Consuming value in queue: " + queue.poll() + " by thread " + Thread.currentThread());
+            queue.notifyAll();
         }
-        System.out.println("Consuming value in queue: " + queue.getFirst() + " by thread " + Thread.currentThread());
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        queue.removeFirst();
-        notifyAll();
     }
 }
