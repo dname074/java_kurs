@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -6,7 +7,7 @@ import static java.lang.Thread.sleep;
 
 public class MyQueue {
     public static final int MAX_VALUES = 5;
-    private List<Integer> queue = new ArrayList<>();
+    private List<Integer> queue = new LinkedList<>();
     private final Random random = new Random();
 
     public synchronized void produce() {
