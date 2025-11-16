@@ -7,8 +7,9 @@ public class Main {
     private static List<int[]> arrayParts = new ArrayList<>();
 
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         createArray();
-        partitionArray();
+        int modulo = partitionArrayAndGetModulo();
         Thread[] threadsArray = new Thread[Constants.THREADS_AMOUNT];
         for (int i=0; i<Constants.THREADS_AMOUNT; i++) {
             int index = i;
@@ -18,7 +19,46 @@ public class Main {
                 }
             });
         }
+        startThreads(threadsArray);
+        addModuloNumber(modulo);
+        System.out.println(Adder.sum);
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        System.out.println(duration);
+//        long startTime = System.currentTimeMillis();
+//        createArray();
+//        int sum = 0;
+//        for (int i : array) {
+//            sum += i;
+//        }
+//        long endTime = System.currentTimeMillis();
+//        System.out.println(sum);
+//        System.out.println(endTime - startTime);
+    }
 
+    private static void createArray() {
+        array = new int[Constants.ARRAY_SIZE];
+        Arrays.fill(array, 1);
+    }
+
+    private static int partitionArrayAndGetModulo() {
+        int threadResponsibility = Constants.ARRAY_SIZE / Constants.THREADS_AMOUNT;
+        int modulo = Constants.ARRAY_SIZE % Constants.THREADS_AMOUNT;
+        for (int i=0; i<Constants.THREADS_AMOUNT; i++) {
+            arrayParts.add(Arrays.copyOfRange(array, i*threadResponsibility, (i+1)*threadResponsibility));
+        }
+        return modulo;
+    }
+
+    private static void addModuloNumber(int modulo) {
+        for (int i=1; i<=modulo; i++) {
+            int lastArrayIndex = Constants.THREADS_AMOUNT - 1;
+            int arraySize = arrayParts.get(lastArrayIndex).length;
+            Adder.sum.addAndGet(arrayParts.get(lastArrayIndex)[arraySize-i]);
+        }
+    }
+
+    private static void startThreads(Thread[] threadsArray) {
         for (Thread thread : threadsArray) {
             thread.start();
         }
@@ -28,20 +68,6 @@ public class Main {
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
-        }
-
-        System.out.println(Adder.sum);
-    }
-
-    private static void createArray() {
-        array = new int[Constants.ARRAY_SIZE];
-        Arrays.fill(array, 1);
-    }
-
-    private static void partitionArray() {
-        int threadResponsibility = Constants.ARRAY_SIZE / Constants.THREADS_AMOUNT;
-        for (int i=0; i<Constants.THREADS_AMOUNT; i++) {
-            arrayParts.add(Arrays.copyOfRange(array, i*threadResponsibility, (i+1)*threadResponsibility));
         }
     }
 }
