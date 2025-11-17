@@ -4,10 +4,9 @@ import java.util.List;
 
 public class Main {
     private static int[] array;
-    private static List<int[]> arrayParts = new ArrayList<>();
+    private static final List<int[]> arrayParts = new ArrayList<>();
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
         createArray();
         int modulo = partitionArrayAndGetModulo();
         Thread[] threadsArray = new Thread[Constants.THREADS_AMOUNT];
@@ -22,18 +21,6 @@ public class Main {
         startThreads(threadsArray);
         addModuloNumber(modulo);
         System.out.println(Adder.sum);
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
-        System.out.println(duration);
-//        long startTime = System.currentTimeMillis();
-//        createArray();
-//        int sum = 0;
-//        for (int i : array) {
-//            sum += i;
-//        }
-//        long endTime = System.currentTimeMillis();
-//        System.out.println(sum);
-//        System.out.println(endTime - startTime);
     }
 
     private static void createArray() {
