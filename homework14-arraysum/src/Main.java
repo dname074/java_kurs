@@ -9,18 +9,16 @@ public class Main {
     public static void main(String[] args) {
         createArray();
         int modulo = partitionArrayAndGetModulo();
+        long startTime = System.currentTimeMillis();
         Thread[] threadsArray = new Thread[Constants.THREADS_AMOUNT];
         for (int i=0; i<Constants.THREADS_AMOUNT; i++) {
-            int index = i;
-            threadsArray[i] = new Thread(() -> {
-                for (int value : arrayParts.get(index)) {
-                    Adder.add(value);
-                }
-            });
+            threadsArray[i] = new Thread(new MyThread(arrayParts, i));
         }
         startThreads(threadsArray);
         addModuloNumber(modulo);
-        System.out.println(Adder.sum);
+        long endTime = System.currentTimeMillis();
+        System.out.println(MyThread.totalSum);
+        System.out.println(endTime - startTime);
     }
 
     private static void createArray() {
@@ -41,7 +39,7 @@ public class Main {
         for (int i=1; i<=modulo; i++) {
             int lastArrayIndex = Constants.THREADS_AMOUNT - 1;
             int arraySize = arrayParts.get(lastArrayIndex).length;
-            Adder.sum.addAndGet(arrayParts.get(lastArrayIndex)[arraySize-i]);
+            MyThread.totalSum += arrayParts.get(lastArrayIndex)[arraySize-i];
         }
     }
 
