@@ -1,0 +1,7 @@
+{
+  "name" : "Maria",
+  "phone" : {
+    "country_code" : "+48",
+    "number" : "123456789"
+  }
+}
