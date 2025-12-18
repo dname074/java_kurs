@@ -1,0 +1,57 @@
+{
+  "name" : "Szpital",
+  "address" : "Jakis",
+  "startDate" : "17.12.2025",
+  "patients" : [
+    {
+      "name" : "Piotr",
+      "surname" : "Kowalski",
+      "birthDate" : "14.04.2001",
+      "user" : {
+        "username" : "piter",
+        "password" : "haslo123",
+        "createdAt" : "08.12.2023 15:00"
+      }
+    },
+    {
+      "name" : "Łukasz",
+      "surname" : "Jakubczyk",
+      "birthDate" : "08.07.1998",
+      "user" : {
+        "username" : "luki",
+        "password" : "haslo12345",
+        "createdAt" : "08.12.2023 15:00"
+      }
+    },
+    {
+      "name" : "Piotr2",
+      "surname" : "Kowalski2",
+      "birthDate" : "14.04.2001",
+      "user" : {
+        "username" : "piter",
+        "password" : "haslo123",
+        "createdAt" : "08.12.2023 15:00"
+      }
+    },
+    {
+      "name" : "Piotr3",
+      "surname" : "Kowalski3",
+      "birthDate" : "14.04.2001",
+      "user" : {
+        "username" : "piter",
+        "password" : "haslo123",
+        "createdAt" : "08.12.2023 15:00"
+      }
+    },
+    {
+      "name" : "Piotr4",
+      "surname" : "Kowalski4",
+      "birthDate" : "14.04.2001",
+      "user" : {
+        "username" : "piter",
+        "password" : "haslo123",
+        "createdAt" : "08.12.2023 15:00"
+      }
+    }
+  ]
+}
